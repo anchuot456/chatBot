@@ -32,7 +32,7 @@ function callSendAPI(sender_psid, response) {
 }
 
 const handleGetStarted = (sender_psid) => {
-  return Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const response = { text: `Can i help you?` };
       await callSendAPI(sender_psid, response);
