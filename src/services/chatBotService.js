@@ -31,11 +31,11 @@ function callSendAPI(sender_psid, response) {
   );
 }
 
-const handleGetStarted = () => {
+const handleGetStarted = (sender_psid) => {
   return Promise(async (resolve, reject) => {
     try {
       const response = { text: `Can i help you?` };
-      await callSendAPI(response);
+      await callSendAPI(sender_psid, response);
       resolve("done");
     } catch (e) {
       reject(e);
