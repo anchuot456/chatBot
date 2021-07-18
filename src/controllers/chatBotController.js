@@ -11,7 +11,7 @@ const setupProfile = async (req, res) => {
   //call profile facebook API
   // Construct the message body
   let request_body = {
-    get_started: { payload: "GET STARTED" },
+    get_started: { payload: "GET_STARTED" },
     whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
   };
 
@@ -127,9 +127,6 @@ function handleMessage(sender_psid, received_message) {
         },
       },
     };
-
-    // Sends the response message
-    callSendAPI(sender_psid, response);
   }
 
   // Sends the response message
