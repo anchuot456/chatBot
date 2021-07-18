@@ -189,7 +189,7 @@ function callSendAPI(sender_psid, response) {
   );
 }
 
-const setupPersistantMenu = (req, res) => {
+const setupPersistantMenu = async (req, res) => {
   // Construct the message body
   let request_body = {
     persistent_menu: [
