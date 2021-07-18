@@ -62,7 +62,7 @@ const sendGetStartedTemplate = () => {
             buttons: [
               {
                 type: "postback",
-                title: "Search Course",
+                title: "Search course",
                 payload: "SEARCH_COURSE",
               },
               {

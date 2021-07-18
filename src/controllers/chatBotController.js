@@ -143,6 +143,7 @@ async function handlePostback(sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   switch (payload) {
+    case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);
       break;
@@ -188,9 +189,48 @@ function callSendAPI(sender_psid, response) {
   );
 }
 
+const setupPersistantMenu = (req, res) => {
+  // Construct the message body
+  let request_body = {
+    persistent_menu: [
+      {
+        locale: "default",
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: "postback",
+            title: "Restart Bot",
+            payload: "RESTART_BOT",
+          },
+        ],
+      },
+    ],
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v11.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("set up persistant menu success!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+
+  return res.send("Setup Persistane Menu Success!");
+};
+
 module.exports = {
   getHomePage,
   getWebhook,
   postWebhook,
   setupProfile,
+  setupPersistantMenu,
 };
