@@ -5,7 +5,34 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 const getHomePage = (req, res) => {
-  return res.send("hello world");
+  return res.render("homepage.ejs");
+};
+const setupProfile = async (req, res) => {
+  //call profile facebook API
+  // Construct the message body
+  let request_body = {
+    get_started: { payload: "GET STARTED" },
+    whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v11.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("set up user profile success!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+
+  return res.send("Setup Profiles Success!");
 };
 const postWebhook = (req, res) => {
   let body = req.body;
@@ -68,7 +95,7 @@ function handleMessage(sender_psid, received_message) {
     // Creates the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
-      text: `You sent the message: "${received_message.text}". Now send me an attachment!`,
+      text: `Welcome to Study Files!`,
     };
   } else if (received_message.attachments) {
     // Gets the URL of the message attachment
@@ -158,4 +185,5 @@ module.exports = {
   getHomePage,
   getWebhook,
   postWebhook,
+  setupProfile,
 };
