@@ -4,6 +4,8 @@ require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
+const IMAGE_GET_STARTED =
+  "https://ejoy-english.com/blog/wp-content/uploads/2017/11/learn-and-study.jpg";
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
@@ -34,13 +36,47 @@ function callSendAPI(sender_psid, response) {
 const handleGetStarted = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = { text: `Can i help you?` };
-      await callSendAPI(sender_psid, response);
+      const response1 = { text: `Welcome to Study Files` };
+      const response2 = sendGetStartedTemplate();
+
+      await callSendAPI(sender_psid, response1);
+      await callSendAPI(sender_psid, response2);
       resolve("done");
     } catch (e) {
       reject(e);
     }
   });
+};
+
+const sendGetStartedTemplate = () => {
+  const response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Can i help you?",
+            subtitle: "Tap a button to answer.",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "Search Course",
+                payload: "SEARCH_COURSE",
+              },
+              {
+                type: "postback",
+                title: "Search category",
+                payload: "SEARCH_CATEGORY",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
 };
 
 module.exports = {
