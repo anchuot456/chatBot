@@ -129,8 +129,9 @@ const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = sendCategory();
+      const response1 = { text: `Category` };
 
-      await callSendAPI(sender_psid, response);
+      await callSendAPI(sender_psid, response1);
       resolve("done");
     } catch (e) {
       reject(e);
