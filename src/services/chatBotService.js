@@ -42,9 +42,9 @@ const getData = async () => {
   const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
   console.log(categoriesRes.data);
   return {
-    bestSellerCoursesRes,
-    categoriesRes,
-    subCategoriesRes,
+    bestSellerCoursesRes: bestSellerCoursesRes,
+    categoriesRes: categoriesRes,
+    subCategoriesRes: subCategoriesRes,
   };
 };
 
