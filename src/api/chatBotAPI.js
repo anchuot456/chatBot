@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const axiosGuestInstance = axios.create({
-  baseURL: "http://localhost:3030/v1/",
+  baseURL: "https://salty-fortress-49217.herokuapp.com/v1/",
   timeout: 5000000,
 });
