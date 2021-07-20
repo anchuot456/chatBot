@@ -1,4 +1,5 @@
 import request from "request";
+import { axiosGuestInstance } from "../api/chatBotAPI";
 require("dotenv").config();
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -32,6 +33,20 @@ function callSendAPI(sender_psid, response) {
     }
   );
 }
+
+const getData = async () => {
+  const bestSellerCoursesRes = await axiosGuestInstance.get(
+    `/courses?sortBy=subscriberNumber:desc&limit=4`
+  );
+  const categoriesRes = await axiosGuestInstance.get(`/categories`);
+  const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
+  console.log(categoriesRes.data);
+  return {
+    bestSellerCoursesRes,
+    categoriesRes,
+    subCategoriesRes,
+  };
+};
 
 const handleGetStarted = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
@@ -100,7 +115,7 @@ const sendCategory = () => {
       type: "template",
       payload: {
         template_type: "generic",
-        elements: categoriesRes.data.map((category) => {
+        elements: getData().categoriesRes.data.map((category) => {
           categoryCard(category);
         }),
       },
@@ -123,6 +138,7 @@ const handleGetCategory = (sender_psid) => {
 };
 
 module.exports = {
+  getData,
   handleGetStarted,
   handleGetCategory,
 };
