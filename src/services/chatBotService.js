@@ -94,7 +94,7 @@ const categoryCard = (category) => {
   return card;
 };
 
-const sendCategoryTemplate = () => {
+const sendCategory = () => {
   const response = {
     attachment: {
       type: "template",
@@ -109,6 +109,20 @@ const sendCategoryTemplate = () => {
   return response;
 };
 
+const handleGetCategory = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = sendCategory();
+
+      await callSendAPI(sender_psid, response);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   handleGetStarted,
+  handleGetCategory,
 };
