@@ -109,7 +109,7 @@ const categoryCard = (category) => {
   return card;
 };
 
-const sendCategory = () => {
+const sendCategory = async () => {
   const categoriesRes = await axiosGuestInstance.get(`/categories`);
   const response = {
     attachment: {
