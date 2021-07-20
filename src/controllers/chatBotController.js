@@ -41,31 +41,7 @@ const getHomePage = (req, res) => {
     console.log(store);
   }, []);
 
-  return (
-    <BrowserRouter>
-      <Helmet
-        titleTemplate="%s - Study-files"
-        defaultTitle="Study-files"
-        htmlAttributes={{ lang: i18n.language }}
-      >
-        <meta name="description" content="Study-files application" />
-      </Helmet>
-      <AppContext.Provider value={{ store, dispatch }}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/search" component={SearchPage} />
-          <Route
-            exact
-            path="/category/:category/:subCategory"
-            component={CategoryCoursesListPage}
-          />
-
-          <Route exact path="/course/:name" component={CourseDetailPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </AppContext.Provider>
-    </BrowserRouter>
-  );
+  return "Hello World";
 };
 const setupProfile = async (req, res) => {
   //call profile facebook API
