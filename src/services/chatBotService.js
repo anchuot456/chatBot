@@ -87,6 +87,18 @@ const sendGetStartedTemplate = () => {
               },
             ],
           },
+          {
+            title: "Hours",
+            subtitle: "MON-FRI 10AM - 11PM  | SAT 5PM - 10PM | SUN 5PM - 9PM",
+            image_url: " https://bit.ly/imageOpening",
+            buttons: [
+              {
+                type: "postback",
+                title: "RESERVE A TABLE",
+                payload: "RESERVE_TABLE",
+              },
+            ],
+          },
         ],
       },
     },
