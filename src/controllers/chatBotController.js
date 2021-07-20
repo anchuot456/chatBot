@@ -64,7 +64,6 @@ const getHomePage = (req, res) => {
           <Route component={NotFoundPage} />
         </Switch>
       </AppContext.Provider>
-      <GlobalStyle />
     </BrowserRouter>
   );
 };
