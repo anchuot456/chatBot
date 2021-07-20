@@ -2,46 +2,19 @@ require("dotenv").config();
 import request from "request";
 import chatBotService from "../services/chatBotService";
 import { axiosGuestInstance } from "../api/chatBotAPI";
-import reducer from "../appReducer";
-import AppContext from "../appContext";
-import React, { useReducer, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
-const initialAppState = {
-  userId: "",
-  bestSellerCourses: [],
-  categories: [],
-  subCategories: [],
-};
-const [store, dispatch] = useReducer(reducer, initialAppState);
+const getHomePage = async (req, res) => {
+  const bestSellerCoursesRes = await axiosGuestInstance.get(
+    `/courses?sortBy=subscriberNumber:desc&limit=4`
+  );
+  const categoriesRes = await axiosGuestInstance.get(`/categories`);
+  const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
+  console.log(bestSellerCoursesRes);
 
-const getHomePage = (req, res) => {
-  useEffect(function () {
-    async function loadApp() {
-      const bestSellerCoursesRes = await axiosGuestInstance.get(
-        `/courses?sortBy=subscriberNumber:desc&limit=4`
-      );
-      const categoriesRes = await axiosGuestInstance.get(`/categories`);
-      const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
-
-      dispatch({
-        type: "init",
-        payload: {
-          bestSellerCourses: bestSellerCoursesRes.data.results,
-          categories: categoriesRes.data,
-          subCategories: subCategoriesRes.data,
-        },
-      });
-    }
-    loadApp();
-    console.log(store);
-  }, []);
-
-  return "Hello World";
+  return res.send("Hello World");
 };
 const setupProfile = async (req, res) => {
   //call profile facebook API
