@@ -119,9 +119,14 @@ const sendCategory = async () => {
       type: "template",
       payload: {
         template_type: "generic",
-        elements: categoriesRes.data.map((category) => {
-          categoryCard(category);
-        }),
+        elements: [
+          {
+            title: "1",
+          },
+          {
+            title: "2",
+          },
+        ],
       },
     },
   };
