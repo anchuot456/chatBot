@@ -136,7 +136,7 @@ const handleGetCategory = (sender_psid) => {
       const response = sendCategory();
       const response1 = { text: `Category` };
 
-      await callSendAPI(sender_psid, response1);
+      await callSendAPI(sender_psid, response);
       resolve("done");
     } catch (e) {
       reject(e);
