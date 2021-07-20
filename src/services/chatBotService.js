@@ -166,7 +166,7 @@ const handleGetSubcategory = (sender_psid) => {
           type: "template",
           payload: {
             template_type: "generic",
-            elements: categoryList,
+            elements: subCategoryList,
           },
         },
       };
