@@ -7,7 +7,6 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 const getHomePage = async (req, res) => {
-  chatBotService.getData();
   return res.send("Hello World");
 };
 const setupProfile = async (req, res) => {

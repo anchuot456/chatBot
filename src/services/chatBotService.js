@@ -110,12 +110,13 @@ const categoryCard = (category) => {
 };
 
 const sendCategory = () => {
+  const categoriesRes = await axiosGuestInstance.get(`/categories`);
   const response = {
     attachment: {
       type: "template",
       payload: {
         template_type: "generic",
-        elements: getData().categoriesRes.data.map((category) => {
+        elements: categoriesRes.data.map((category) => {
           categoryCard(category);
         }),
       },
