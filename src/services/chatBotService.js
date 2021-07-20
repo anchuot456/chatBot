@@ -171,12 +171,13 @@ const handleGetCategory = (sender_psid) => {
       const categoryList = categoriesRes.data.map((category) => {
         return categoryCard(category);
       });
+      console.log(categoryList);
       const response1 = {
         attachment: {
           type: "template",
           payload: {
             template_type: "generic",
-            elements: [...categoryList],
+            elements: categoryList,
           },
         },
       };
