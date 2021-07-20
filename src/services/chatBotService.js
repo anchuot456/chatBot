@@ -168,41 +168,15 @@ const sendCategory = async () => {
 const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = sendCategory();
+      const categoryList = categoriesRes.data.map((category) => {
+        return categoryCard(category);
+      });
       const response1 = {
         attachment: {
           type: "template",
           payload: {
             template_type: "generic",
-            elements: [
-              {
-                title: "Our menus",
-                subtitle:
-                  "We are pleased to offer you a wide-range of menu for lunch or dinner.",
-                image_url: "https://bit.ly/imageMenu",
-                buttons: [
-                  {
-                    type: "postback",
-                    title: "LUNCH MENU",
-                    payload: "LUNCH_MENU",
-                  },
-                ],
-              },
-
-              {
-                title: "Hours",
-                subtitle:
-                  "MON-FRI 10AM - 11PM  | SAT 5PM - 10PM | SUN 5PM - 9PM",
-                image_url: " https://bit.ly/imageOpening",
-                buttons: [
-                  {
-                    type: "postback",
-                    title: "RESERVE A TABLE",
-                    payload: "RESERVE_TABLE",
-                  },
-                ],
-              },
-            ],
+            elements: [...categoryList],
           },
         },
       };
