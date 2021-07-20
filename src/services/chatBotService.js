@@ -87,18 +87,6 @@ const sendGetStartedTemplate = () => {
               },
             ],
           },
-          {
-            title: "Hours",
-            subtitle: "MON-FRI 10AM - 11PM  | SAT 5PM - 10PM | SUN 5PM - 9PM",
-            image_url: " https://bit.ly/imageOpening",
-            buttons: [
-              {
-                type: "postback",
-                title: "RESERVE A TABLE",
-                payload: "RESERVE_TABLE",
-              },
-            ],
-          },
         ],
       },
     },
@@ -106,6 +94,7 @@ const sendGetStartedTemplate = () => {
   return response;
 };
 
+//Category
 const categoryCard = (category) => {
   const card = {
     title: category.name,
@@ -119,50 +108,6 @@ const categoryCard = (category) => {
     ],
   };
   return card;
-};
-
-const sendCategory = async () => {
-  const categoriesRes = await axiosGuestInstance.get(`/categories`);
-  const categoryList = categoriesRes.data.map((category) => {
-    return categoryCard(category);
-  });
-  const response = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "generic",
-        elements: [
-          {
-            title: "Our menus",
-            subtitle:
-              "We are pleased to offer you a wide-range of menu for lunch or dinner.",
-            image_url: "https://bit.ly/imageMenu",
-            buttons: [
-              {
-                type: "postback",
-                title: "LUNCH MENU",
-                payload: "LUNCH_MENU",
-              },
-            ],
-          },
-
-          {
-            title: "Hours",
-            subtitle: "MON-FRI 10AM - 11PM  | SAT 5PM - 10PM | SUN 5PM - 9PM",
-            image_url: " https://bit.ly/imageOpening",
-            buttons: [
-              {
-                type: "postback",
-                title: "RESERVE A TABLE",
-                payload: "RESERVE_TABLE",
-              },
-            ],
-          },
-        ],
-      },
-    },
-  };
-  return response;
 };
 
 const handleGetCategory = (sender_psid) => {
@@ -191,8 +136,52 @@ const handleGetCategory = (sender_psid) => {
   });
 };
 
+//Subcategory
+const subCategoryCard = (category) => {
+  const card = {
+    title: category.name,
+    image_url: IMAGE_GET_STARTED,
+    buttons: [
+      {
+        type: "postback",
+        title: "Search courses",
+        subtitle: "Search course in this subcategory",
+        payload: "SEARCH_SUBCATEGORY_COURSES",
+      },
+    ],
+  };
+  return card;
+};
+
+const handleGetSubcategory = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
+      const subCategoryList = subCategoriesRes.data.map((subCategory) => {
+        return subCategoryCard(subCategory);
+      });
+      console.log(categoryList);
+      const response1 = {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: categoryList,
+          },
+        },
+      };
+
+      await callSendAPI(sender_psid, response1);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getData,
   handleGetStarted,
   handleGetCategory,
+  handleGetSubcategory,
 };
