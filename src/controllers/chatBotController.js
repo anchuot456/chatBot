@@ -12,7 +12,7 @@ const getHomePage = async (req, res) => {
   );
   const categoriesRes = await axiosGuestInstance.get(`/categories`);
   const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
-  console.log(bestSellerCoursesRes);
+  console.log(categoriesRes.data);
 
   return res.send("Hello World");
 };

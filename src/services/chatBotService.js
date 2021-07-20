@@ -79,6 +79,36 @@ const sendGetStartedTemplate = () => {
   return response;
 };
 
+const categoryCard = (category) => {
+  const card = {
+    title: category.name,
+    image_url: IMAGE_GET_STARTED,
+    buttons: [
+      {
+        type: "postback",
+        title: "Search subcategory",
+        payload: "SEARCH_SUBCATEGORY",
+      },
+    ],
+  };
+  return card;
+};
+
+const sendCategoryTemplate = () => {
+  const response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: categoriesRes.data.map((category) => {
+          categoryCard(category);
+        }),
+      },
+    },
+  };
+  return response;
+};
+
 module.exports = {
   handleGetStarted,
 };
