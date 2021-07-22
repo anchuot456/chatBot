@@ -14,7 +14,7 @@ const setupProfile = async (req, res) => {
   // Construct the message body
   let request_body = {
     get_started: {
-      payload: JSON.stringify({ type: "GET_STARTED", value: "" }),
+      payload: "GET_STARTED",
     },
     whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
   };
@@ -143,10 +143,10 @@ async function handlePostback(sender_psid, received_postback) {
   let response;
   console.log(received_postback.payload);
   // Get the payload for the postback
-  let payload = JSON.parse(received_postback.payload);
+  let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  switch (payload.type) {
+  switch (payload) {
     case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);
@@ -160,11 +160,7 @@ async function handlePostback(sender_psid, received_postback) {
       await chatBotService.handleGetCategory(sender_psid);
       break;
     default:
-      if (payload.indexOf(`SEARCH_CATEGORY_COURSE`) === 0) {
-        const categoryId = payload.slice(23);
-        await chatBotService.handleGetCategoryCourse(sender_psid, categoryId);
-        break;
-      }
+      console.log(payload);
       response = {
         text: `Oops! I don't know your response with postback ${payload}.`,
       };
