@@ -157,6 +157,11 @@ async function handlePostback(sender_psid, received_postback) {
       await chatBotService.handleGetCategory(sender_psid);
       break;
     default:
+      if (payload.indexOf(`SEARCH_CATEGORY_COURSE`) === 0) {
+        const categoryId = payload.slice(23);
+        await chatBotService.handleGetCategoryCourse(sender_psid, categoryId);
+        break;
+      }
       response = {
         text: `Oops! I don't know your response with postback ${payload}.`,
       };

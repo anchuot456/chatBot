@@ -89,7 +89,7 @@ const categoryCard = (category) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: "SEARCH_CATEGORY_COURSE",
+        payload: `SEARCH_CATEGORY_COURSE ${category.id}`,
       },
     ],
   };
@@ -100,6 +100,7 @@ const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const categoriesRes = await axiosGuestInstance.get(`/subCategories`);
+      console.log(categoriesRes);
       const categoryList = categoriesRes.data.map((category) => {
         return categoryCard(category);
       });
@@ -139,12 +140,12 @@ const courseCard = (course) => {
   return card;
 };
 
-const handleGetCategoryCourse = (sender_psid) => {
+const handleGetCategoryCourse = (sender_psid, categoryId) => {
   return new Promise(async (resolve, reject) => {
     try {
       //lấy category course
       const coursesRes = await axiosGuestInstance.get(
-        `/courses?sortBy=view:desc&limit=10&subCategoryId=${subCategory.id}`
+        `/courses?sortBy=view:desc&limit=10&subCategoryId=${categoryId}`
       );
       const courseList = coursesRes.data.map((course) => {
         return courseCard(course);
