@@ -13,7 +13,7 @@ const setupProfile = async (req, res) => {
   //call profile facebook API
   // Construct the message body
   let request_body = {
-    get_started: { payload: "GET_STARTED" },
+    get_started: { payload: { type: "GET_STARTED", value: "" } },
     whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
   };
 
@@ -205,7 +205,7 @@ const setupPersistantMenu = async (req, res) => {
           {
             type: "postback",
             title: "Restart Bot",
-            payload: "RESTART_BOT",
+            payload: { type: "RESTART_BOT", value: "" },
           },
         ],
       },
