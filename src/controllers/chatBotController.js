@@ -13,7 +13,9 @@ const setupProfile = async (req, res) => {
   //call profile facebook API
   // Construct the message body
   let request_body = {
-    get_started: { payload: "GET_STARTED" },
+    get_started: {
+      payload: JSON.stringify({ type: "GET_STARTED", value: "" }),
+    },
     whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
   };
 
@@ -140,10 +142,10 @@ async function handlePostback(sender_psid, received_postback) {
   let response;
 
   // Get the payload for the postback
-  let payload = received_postback.payload;
+  let payload = JSON.parse(received_postback.payload);
 
   // Set the response based on the postback payload
-  switch (payload) {
+  switch (payload.type) {
     case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);
@@ -210,7 +212,7 @@ const setupPersistantMenu = async (req, res) => {
           {
             type: "postback",
             title: "Restart Bot",
-            payload: "RESTART_BOT",
+            payload: JSON.stringify({ type: "RESTART_BOT", value: "" }),
           },
         ],
       },

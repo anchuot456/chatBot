@@ -64,12 +64,12 @@ const sendGetStartedTemplate = () => {
               {
                 type: "postback",
                 title: "Search course",
-                payload: "SEARCH_COURSE",
+                payload: JSON.stringify({ type: "SEARCH_COURSE", value: "" }),
               },
               {
                 type: "postback",
                 title: "Search category",
-                payload: "SEARCH_CATEGORY",
+                payload: JSON.stringify({ type: "SEARCH_CATEGORY", value: "" }),
               },
             ],
           },
@@ -89,7 +89,10 @@ const categoryCard = (category) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: `SEARCH_CATEGORY_COURSE ${category.id}`,
+        payload: JSON.stringify({
+          type: `SEARCH_CATEGORY_COURSE`,
+          value: category.id,
+        }),
       },
     ],
   };
@@ -133,7 +136,10 @@ const courseCard = (course) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: "SEARCH_CATEGORY_COURSE",
+        payload: JSON.stringify({
+          type: `SEARCH_COURSE`,
+          value: category.id,
+        }),
       },
     ],
   };
