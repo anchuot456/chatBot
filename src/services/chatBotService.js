@@ -114,6 +114,7 @@ const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const categoriesRes = await axiosGuestInstance.get(`/subCategories`);
+      console.log(categoriesRes);
       const categoryList = categoriesRes.data.map((category) => {
         return categoryCard(category);
       });
