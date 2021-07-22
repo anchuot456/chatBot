@@ -143,7 +143,7 @@ async function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  switch (payload) {
+  switch (payload.type) {
     case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);
@@ -152,6 +152,9 @@ async function handlePostback(sender_psid, received_postback) {
       break;
     case `SEARCH_CATEGORY`:
       await chatBotService.handleGetCategory(sender_psid);
+      break;
+    case `SEARCH_CATEGORY_COURSE`:
+      await chatBotService.handleGetCategoryCourse(sender_psid, payload.value);
       break;
     default:
       response = {

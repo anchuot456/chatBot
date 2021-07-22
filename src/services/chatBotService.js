@@ -78,12 +78,12 @@ const sendGetStartedTemplate = () => {
               {
                 type: "postback",
                 title: "Search course",
-                payload: "SEARCH_COURSE",
+                payload: { type: "SEARCH_COURSE", value: "" },
               },
               {
                 type: "postback",
                 title: "Search category",
-                payload: "SEARCH_CATEGORY",
+                payload: { type: "SEARCH_CATEGORY", value: "" },
               },
             ],
           },
@@ -103,7 +103,7 @@ const categoryCard = (category) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: "SEARCH_CATEGORY_COURSE",
+        payload: { type: "SEARCH_CATEGORY_COURSE", value: `${category.id}` },
       },
     ],
   };
@@ -114,7 +114,6 @@ const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const categoriesRes = await axiosGuestInstance.get(`/subCategories`);
-      console.log(categoriesRes);
       const categoryList = categoriesRes.data.map((category) => {
         return categoryCard(category);
       });
@@ -137,8 +136,55 @@ const handleGetCategory = (sender_psid) => {
   });
 };
 
+//Category Course Card
+const courseCard = (course) => {
+  const card = {
+    title: course.name,
+    subtitle: course.detailDescription,
+    image_url: IMAGE_GET_STARTED,
+    buttons: [
+      {
+        type: "postback",
+        title: "Search courses",
+        payload: { type: "SEARCH_CATEGORY_COURSE", value: `` },
+      },
+    ],
+  };
+  return card;
+};
+
+const handleGetCategoryCourse = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      //lấy category course
+      const coursesRes = await axiosGuestInstance.get(
+        `/courses?sortBy=view:desc&limit=10&subCategoryId=${subCategory.id}`
+      );
+      const courseList = coursesRes.data.map((course) => {
+        return courseCard(course);
+      });
+      console.log(courseList);
+      const response1 = {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: courseList,
+          },
+        },
+      };
+
+      await callSendAPI(sender_psid, response1);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getData,
   handleGetStarted,
   handleGetCategory,
+  handleGetCategoryCourse,
 };
