@@ -161,7 +161,10 @@ async function handlePostback(sender_psid, received_postback) {
           await chatBotService.handleGetCategory(sender_psid);
           break;
         case `SEARCH_CATEGORY_COURSE`:
-          await chatBotService.handleGetCategory(sender_psid);
+          await chatBotService.handleGetCategoryCourse(
+            sender_psid,
+            payload.value
+          );
           break;
         default:
           break;
