@@ -143,6 +143,7 @@ async function handlePostback(sender_psid, received_postback) {
 
   // Get the payload for the postback
   let payload = JSON.parse(received_postback.payload);
+  console.log(payload);
 
   // Set the response based on the postback payload
   switch (payload.type) {
