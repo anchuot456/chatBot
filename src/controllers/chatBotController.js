@@ -153,9 +153,6 @@ async function handlePostback(sender_psid, received_postback) {
     case `SEARCH_CATEGORY`:
       await chatBotService.handleGetCategory(sender_psid);
       break;
-    case `SEARCH_SUBCATEGORY`:
-      await chatBotService.handleGetSubcategory(sender_psid);
-      break;
     default:
       response = {
         text: `Oops! I don't know your response with postback ${payload}.`,

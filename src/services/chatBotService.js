@@ -102,8 +102,8 @@ const categoryCard = (category) => {
     buttons: [
       {
         type: "postback",
-        title: "Search subcategory",
-        payload: "SEARCH_SUBCATEGORY",
+        title: "Search courses",
+        payload: "SEARCH_CATEGORY_COURSE",
       },
     ],
   };
@@ -113,7 +113,7 @@ const categoryCard = (category) => {
 const handleGetCategory = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const categoriesRes = await axiosGuestInstance.get(`/categories`);
+      const categoriesRes = await axiosGuestInstance.get(`/subCategories`);
       const categoryList = categoriesRes.data.map((category) => {
         return categoryCard(category);
       });
@@ -136,52 +136,8 @@ const handleGetCategory = (sender_psid) => {
   });
 };
 
-//Subcategory
-const subCategoryCard = (category) => {
-  const card = {
-    title: category.name,
-    image_url: IMAGE_GET_STARTED,
-    buttons: [
-      {
-        type: "postback",
-        title: "Search courses",
-        subtitle: "Search course in this subcategory",
-        payload: "SEARCH_SUBCATEGORY_COURSES",
-      },
-    ],
-  };
-  return card;
-};
-
-const handleGetSubcategory = (sender_psid) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
-      const subCategoryList = subCategoriesRes.data.map((subCategory) => {
-        return subCategoryCard(subCategory);
-      });
-      console.log(categoryList);
-      const response1 = {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: subCategoryList,
-          },
-        },
-      };
-
-      await callSendAPI(sender_psid, response1);
-      resolve("done");
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
 module.exports = {
   getData,
   handleGetStarted,
   handleGetCategory,
-  handleGetSubcategory,
 };
