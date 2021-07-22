@@ -34,20 +34,6 @@ function callSendAPI(sender_psid, response) {
   );
 }
 
-const getData = async () => {
-  const bestSellerCoursesRes = await axiosGuestInstance.get(
-    `/courses?sortBy=subscriberNumber:desc&limit=4`
-  );
-  const categoriesRes = await axiosGuestInstance.get(`/categories`);
-  const subCategoriesRes = await axiosGuestInstance.get(`/subCategories`);
-  console.log(categoriesRes.data);
-  return {
-    bestSellerCoursesRes: bestSellerCoursesRes,
-    categoriesRes: categoriesRes,
-    subCategoriesRes: subCategoriesRes,
-  };
-};
-
 const handleGetStarted = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -78,12 +64,12 @@ const sendGetStartedTemplate = () => {
               {
                 type: "postback",
                 title: "Search course",
-                payload: { type: "SEARCH_COURSE", value: "" },
+                payload: "SEARCH_COURSE",
               },
               {
                 type: "postback",
                 title: "Search category",
-                payload: { type: "SEARCH_CATEGORY", value: "" },
+                payload: "SEARCH_CATEGORY",
               },
             ],
           },
@@ -103,7 +89,7 @@ const categoryCard = (category) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: { type: "SEARCH_CATEGORY_COURSE", value: `${category.id}` },
+        payload: "SEARCH_CATEGORY_COURSE",
       },
     ],
   };
@@ -146,7 +132,7 @@ const courseCard = (course) => {
       {
         type: "postback",
         title: "Search courses",
-        payload: { type: "SEARCH_CATEGORY_COURSE", value: `` },
+        payload: "SEARCH_CATEGORY_COURSE",
       },
     ],
   };
@@ -183,7 +169,6 @@ const handleGetCategoryCourse = (sender_psid) => {
 };
 
 module.exports = {
-  getData,
   handleGetStarted,
   handleGetCategory,
   handleGetCategoryCourse,
