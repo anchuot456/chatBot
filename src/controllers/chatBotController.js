@@ -18,6 +18,7 @@ const setupProfile = async (req, res) => {
     },
     whitelisted_domain: ["https://study-files-chatbot.herokuapp.com/"],
   };
+  console.log(request_body);
 
   // Send the HTTP request to the Messenger Platform
   await request(
