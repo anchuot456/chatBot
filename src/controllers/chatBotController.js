@@ -143,10 +143,10 @@ async function handlePostback(sender_psid, received_postback) {
   let response;
   console.log(received_postback.payload);
   // Get the payload for the postback
-  let payload = received_postback.payload;
+  let payload = JSON.parse(received_postback.payload);
 
   // Set the response based on the postback payload
-  switch (payload) {
+  switch (payload.type) {
     case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);
@@ -160,7 +160,11 @@ async function handlePostback(sender_psid, received_postback) {
       await chatBotService.handleGetCategory(sender_psid);
       break;
     default:
-      console.log(payload);
+      if (payload.indexOf(`SEARCH_CATEGORY_COURSE`) === 0) {
+        const categoryId = payload.slice(23);
+        await chatBotService.handleGetCategoryCourse(sender_psid, categoryId);
+        break;
+      }
       response = {
         text: `Oops! I don't know your response with postback ${payload}.`,
       };
