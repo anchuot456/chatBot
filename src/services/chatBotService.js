@@ -226,15 +226,15 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
       console.log(coursesRes.data);
       const course = coursesRes.data;
       const response1 = {
-        text: `details course`,
-        /*attachment: {
+        attachment: {
           type: "template",
           payload: {
             template_type: "generic",
             elements: [
               {
-                title: coursesRes.name,
-                subtitle: `${course.teacher.name}`,
+                title: course.name,
+                subtitle: `${course.teacher.name}
+                ${course.detailDescription}`,
                 image_url: IMAGE_GET_STARTED,
                 buttons: [
                   {
@@ -246,7 +246,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
               },
             ],
           },
-        },*/
+        },
       };
 
       await callSendAPI(sender_psid, response1);
