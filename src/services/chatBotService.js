@@ -226,7 +226,8 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
       console.log(coursesRes.data);
       const course = coursesRes.data;
       const response1 = {
-        attachment: {
+        text: `details course`,
+        /*attachment: {
           type: "template",
           payload: {
             template_type: "generic",
@@ -245,7 +246,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
               },
             ],
           },
-        },
+        },*/
       };
 
       await callSendAPI(sender_psid, response1);
