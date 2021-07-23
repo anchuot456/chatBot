@@ -175,12 +175,12 @@ const handleGetCategoryCourse = (sender_psid, categoryId) => {
   });
 };
 
-const handleGetSearchCourse = (sender_psid, categoryId) => {
+const handleGetSearchCourse = (sender_psid, courseName) => {
   return new Promise(async (resolve, reject) => {
     try {
-      //lấy category course
+      //lấy course
       const coursesRes = await axiosGuestInstance.get(
-        `/courses?sortBy=view:desc&limit=10&subCategoryId=${categoryId}`
+        `/courses?sortBy=view:desc&limit=10&query=${courseName}`
       );
       const courseList = coursesRes.data.map((course) => {
         return courseCard(course);
