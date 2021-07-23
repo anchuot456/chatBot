@@ -138,7 +138,7 @@ const courseCard = (course) => {
         title: "Search courses",
         payload: JSON.stringify({
           type: `SEARCH_COURSE`,
-          value: category.id,
+          value: course.id,
         }),
       },
     ],
