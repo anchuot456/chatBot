@@ -130,14 +130,14 @@ const handleGetCategory = (sender_psid) => {
 const courseCard = (course) => {
   const card = {
     title: course.name,
-    subtitle: course.detailDescription,
+    subtitle: course.shortDescription,
     image_url: IMAGE_GET_STARTED,
     buttons: [
       {
         type: "postback",
-        title: "Search courses",
+        title: "See more",
         payload: JSON.stringify({
-          type: `SEARCH_COURSE`,
+          type: `SEE_MORE`,
           value: course.id,
         }),
       },
@@ -209,6 +209,45 @@ const handleGetSearchKey = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response1 = { text: `Type course name you want to find` };
+
+      await callSendAPI(sender_psid, response1);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const handleGetDeatilCourse = (sender_psid, courseId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      //lấy course
+      const coursesRes = await axiosGuestInstance.get(`/courses/${courseId}`);
+      console.log(coursesRes.data);
+      const course = coursesRes.data;
+      const response1 = {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [
+              {
+                title: coursesRes.name,
+                subtitle: `${course.teacher.name}
+                ${coursesRes.detailDescription}`,
+                image_url: IMAGE_GET_STARTED,
+                buttons: [
+                  {
+                    type: "postback",
+                    title: "Come back to menu",
+                    payload: `RESTART`,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      };
 
       await callSendAPI(sender_psid, response1);
       resolve("done");
