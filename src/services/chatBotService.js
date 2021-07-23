@@ -234,7 +234,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
               {
                 title: course.name,
                 subtitle: `${course.teacher.name}
-                ${course.detailDescription}`,
+${course.detailDescription}`,
                 image_url: IMAGE_GET_STARTED,
                 buttons: [
                   {
