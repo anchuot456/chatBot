@@ -153,7 +153,7 @@ const handleGetCategoryCourse = (sender_psid, categoryId) => {
       const coursesRes = await axiosGuestInstance.get(
         `/courses?sortBy=view:desc&limit=10&subCategoryId=${categoryId}`
       );
-      const courseList = coursesRes.data.result.map((course) => {
+      const courseList = coursesRes.data.results.map((course) => {
         return courseCard(course);
       });
       console.log(courseList);
@@ -183,7 +183,7 @@ const handleGetSearchCourse = (sender_psid, courseName) => {
         `/courses?sortBy=view:desc&limit=10&query=${courseName}`
       );
       console.log(coursesRes.data);
-      const courseList = coursesRes.data.result.map((course) => {
+      const courseList = coursesRes.data.results.map((course) => {
         return courseCard(course);
       });
       console.log(courseList);
