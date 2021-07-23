@@ -168,6 +168,12 @@ async function handlePostback(sender_psid, received_postback) {
             payload.value
           );
           break;
+        case `SEE_MORE`:
+          await chatBotService.handleGetDetailCourse(
+            sender_psid,
+            payload.value
+          );
+          break;
         default:
           break;
       }

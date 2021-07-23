@@ -218,7 +218,7 @@ const handleGetSearchKey = (sender_psid) => {
   });
 };
 
-const handleGetDeatilCourse = (sender_psid, courseId) => {
+const handleGetDetailCourse = (sender_psid, courseId) => {
   return new Promise(async (resolve, reject) => {
     try {
       //lấy course
@@ -263,4 +263,5 @@ module.exports = {
   handleGetCategoryCourse,
   handleGetSearchCourse,
   handleGetSearchKey,
+  handleGetDetailCourse,
 };
