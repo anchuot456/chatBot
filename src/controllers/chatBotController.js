@@ -148,6 +148,7 @@ async function handlePostback(sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   switch (payload) {
+    case `RESTART`:
     case `RESTART_BOT`:
     case `GET STARTED`:
       await chatBotService.handleGetStarted(sender_psid);

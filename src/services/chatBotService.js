@@ -240,7 +240,7 @@ ${course.detailDescription}`,
                   {
                     type: "postback",
                     title: "Come back to menu",
-                    payload: { type: `RESTART_BOT`, value: "" },
+                    payload: `RESTART_BOT`,
                   },
                 ],
               },
