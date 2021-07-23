@@ -182,6 +182,7 @@ const handleGetSearchCourse = (sender_psid, courseName) => {
       const coursesRes = await axiosGuestInstance.get(
         `/courses?sortBy=view:desc&limit=10&query=${courseName}`
       );
+      console.log(coursesRes.data);
       const courseList = coursesRes.data.map((course) => {
         return courseCard(course);
       });
