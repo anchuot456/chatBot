@@ -99,9 +99,10 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {
     // Creates the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    response = {
-      text: `Welcome to Study Files!`,
-    };
+    await chatBotService.handleGetSearchCourse(
+      sender_psid,
+      received_message.text
+    );
   } else if (received_message.attachments) {
     // Gets the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
@@ -156,6 +157,7 @@ async function handlePostback(sender_psid, received_postback) {
       console.log(payload);
       switch (payload.type) {
         case `SEARCH_COURSE`:
+          await chatBotService.handleGetSearchKey(sender_psid);
           break;
         case `SEARCH_CATEGORY`:
           await chatBotService.handleGetCategory(sender_psid);

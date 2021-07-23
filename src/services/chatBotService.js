@@ -175,8 +175,52 @@ const handleGetCategoryCourse = (sender_psid, categoryId) => {
   });
 };
 
+const handleGetSearchCourse = (sender_psid, categoryId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      //lấy category course
+      const coursesRes = await axiosGuestInstance.get(
+        `/courses?sortBy=view:desc&limit=10&subCategoryId=${categoryId}`
+      );
+      const courseList = coursesRes.data.map((course) => {
+        return courseCard(course);
+      });
+      console.log(courseList);
+      const response1 = {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: courseList,
+          },
+        },
+      };
+
+      await callSendAPI(sender_psid, response1);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const handleGetSearchKey = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response1 = { text: `Type course name you want to find` };
+
+      await callSendAPI(sender_psid, response1);
+      resolve("done");
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   handleGetStarted,
   handleGetCategory,
   handleGetCategoryCourse,
+  handleGetSearchCourse,
+  handleGetSearchKey,
 };
