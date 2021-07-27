@@ -131,7 +131,7 @@ const courseCard = (course) => {
   const card = {
     title: course.name,
     subtitle: course.shortDescription,
-    image_url: IMAGE_GET_STARTED,
+    image_url: course.image,
     buttons: [
       {
         type: "postback",
@@ -235,7 +235,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
                 title: course.name,
                 subtitle: `${course.teacher.name}
 ${course.detailDescription}`,
-                image_url: IMAGE_GET_STARTED,
+                image_url: course.image,
                 buttons: [
                   {
                     type: "postback",
