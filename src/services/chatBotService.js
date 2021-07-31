@@ -235,7 +235,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
                 title: course.name,
                 subtitle: `${course.teacher.name}
 ${course.fee}$
-${course.shortDescription}`,
+Rating: ${course.rating}`,
                 image_url: course.image,
                 buttons: [
                   {
