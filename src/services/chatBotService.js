@@ -182,22 +182,31 @@ const handleGetSearchCourse = (sender_psid, courseName) => {
       const coursesRes = await axiosGuestInstance.get(
         `/courses?sortBy=view:desc&limit=10&query=${courseName}`
       );
-      console.log(coursesRes.data);
-      const courseList = coursesRes.data.results.map((course) => {
-        return courseCard(course);
-      });
-      console.log(courseList);
-      const response1 = {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "generic",
-            elements: courseList,
+      if (coursesRes.data.totalResults === 0) {
+        const response = {
+          text: `Sorry we don't find the course you want.`,
+        };
+        const response2 = sendGetStartedTemplate();
+        await callSendAPI(sender_psid, response);
+        await callSendAPI(sender_psid, response2);
+      } else {
+        console.log(coursesRes.data);
+        const courseList = coursesRes.data.results.map((course) => {
+          return courseCard(course);
+        });
+        console.log(courseList);
+        const response1 = {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "generic",
+              elements: courseList,
+            },
           },
-        },
-      };
+        };
 
-      await callSendAPI(sender_psid, response1);
+        await callSendAPI(sender_psid, response1);
+      }
       resolve("done");
     } catch (e) {
       reject(e);
@@ -233,7 +242,7 @@ const handleGetDetailCourse = (sender_psid, courseId) => {
             elements: [
               {
                 title: course.name,
-                subtitle: `${course.teacher.name}
+                subtitle: `create by: ${course.teacher.name}
 ${course.fee}$
 Rating: ${course.rating}`,
                 image_url: course.image,
